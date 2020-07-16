@@ -8,13 +8,13 @@ namespace Test
     public class UnitTest
     {
         [Fact]
-        public void Test()
+        public async void Test()
         {
             var fileHandling = new FileHandling();
 
-            var content = System.IO.File.ReadAllText(@"C:\Users\Tábi Zoltán\source\repos\DSS-Challange\Samples\Sample1.csv");
+            var content = System.IO.File.ReadAllText(@"..\..\..\..\..\Samples\Sample1.csv");
 
-            var result = fileHandling.Read(@"C:\Users\Tábi Zoltán\source\repos\DSS-Challange\Samples\Sample1.csv");
+            var result = await fileHandling.ReadAsync(@"..\..\..\..\..\Samples\Sample1.csv");
         }
     }
 }
