@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using RoDSStar.Logic.Models;
 using RoDSStar.Logic.Enums;
+using Serilog;
 
 namespace RoDSStar.Logic.Helpers
 {
@@ -30,11 +31,12 @@ namespace RoDSStar.Logic.Helpers
                 {
                     Id = splitLine[0],
                     Product = ProductConverter(splitLine[1].Trim()),
-                    Count = int.Parse(splitLine[2].Replace(" ", String.Empty)),
+                    Count = int.Parse(splitLine[2].Replace(" ", string.Empty)),
                     Deadline = DeadlineConverter(splitLine[3]),
-                    ProfitPerPrice = int.Parse(splitLine[4].Replace(" ", String.Empty)),
-                    PenaltForDelayPerDay = int.Parse(splitLine[5].Replace(" ", String.Empty).Trim()),
+                    ProfitPerPrice = int.Parse(splitLine[4].Replace(" ", string.Empty)),
+                    PenaltForDelayPerDay = int.Parse(splitLine[5].Replace(" ", string.Empty).Trim()),
                 });
+                Log.Information($"{splitLine[0]} azonosítójú megrendelés beolvasva!");
             }
 
             return records;
