@@ -1,4 +1,4 @@
-﻿namespace RoDSStar.Model
+﻿namespace RoDSStar.Logic.Enums
 {
     /// <summary>
     /// Termék típusa
@@ -8,14 +8,14 @@
         /// <summary>
         /// Gyerek bicikli
         /// </summary>
-        GYB,
+        ChildrenBicycle,
         /// <summary>
         /// Felnőtt bicikli
         /// </summary>
-        FB,
+        AdultBicycle,
         /// <summary>
         /// Serdülő bicikli
         /// </summary>
-        SB
+        TeenagerBicycle
     }
 }

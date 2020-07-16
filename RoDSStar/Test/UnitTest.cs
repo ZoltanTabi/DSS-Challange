@@ -1,20 +1,18 @@
 using System;
 using Xunit;
-using RoDSStar.Model;
+using RoDSStar.Logic.Helpers;
 using System.IO;
 
-namespace Test
+namespace RoDSStar.Test
 {
     public class UnitTest
     {
         [Fact]
         public async void Test()
         {
-            var fileHandling = new FileHandling();
-
             var content = System.IO.File.ReadAllText(@"..\..\..\..\..\Samples\Sample1.csv");
 
-            var result = await fileHandling.ReadAsync(@"..\..\..\..\..\Samples\Sample1.csv");
+            var result = await FileHandling.ReadAsync(@"..\..\..\..\..\Samples\Sample1.csv");
         }
     }
 }

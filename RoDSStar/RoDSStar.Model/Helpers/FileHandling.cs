@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using RoDSStar.Logic.Models;
+using RoDSStar.Logic.Enums;
 
-namespace RoDSStar.Model
+namespace RoDSStar.Logic.Helpers
 {
     /// <summary>
     /// Fájl kezelését végző osztály
@@ -27,7 +29,7 @@ namespace RoDSStar.Model
                 records.Add(new Order
                 {
                     Id = splitLine[0],
-                    Product = (ProductType)Enum.Parse(typeof(ProductType), splitLine[1]),
+                    Product = ProductConverter(splitLine[1].Trim()),
                     Count = int.Parse(splitLine[2].Replace(" ", String.Empty)),
                     Deadline = DeadlineConverter(splitLine[3]),
                     ProfitPerPrice = int.Parse(splitLine[4].Replace(" ", String.Empty)),
@@ -56,6 +58,17 @@ namespace RoDSStar.Model
             if (deadline < DateTime.Now) deadline.AddYears(1);
 
             return deadline;
+        }
+
+        private static ProductType ProductConverter(string product)
+        {
+            return product switch
+            {
+                "GYB" => ProductType.ChildrenBicycle,
+                "FB" => ProductType.AdultBicycle,
+                "SB" => ProductType.TeenagerBicycle,
+                _ => throw new ApplicationException("Érvénytelen termék forma!"),
+            };
         }
     }
 }

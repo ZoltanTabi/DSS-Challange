@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoDSStar.Model", "RoDSStar.Model\RoDSStar.Model.csproj", "{24148259-8EA9-411F-B0FF-00F6B7A4667C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoDSStar.Logic", "RoDSStar.Model\RoDSStar.Logic.csproj", "{24148259-8EA9-411F-B0FF-00F6B7A4667C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{6297C824-0BAD-4360-8658-4FE5296E235B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoDSStar.Test", "Test\RoDSStar.Test.csproj", "{6297C824-0BAD-4360-8658-4FE5296E235B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoDSStar.ConsoleApp", "RoDSStar.ConsoleApp\RoDSStar.ConsoleApp.csproj", "{4FF09908-D77A-4311-BC91-691DEFC02243}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{6297C824-0BAD-4360-8658-4FE5296E235B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6297C824-0BAD-4360-8658-4FE5296E235B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6297C824-0BAD-4360-8658-4FE5296E235B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FF09908-D77A-4311-BC91-691DEFC02243}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FF09908-D77A-4311-BC91-691DEFC02243}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FF09908-D77A-4311-BC91-691DEFC02243}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FF09908-D77A-4311-BC91-691DEFC02243}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

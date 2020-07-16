@@ -1,6 +1,7 @@
 ﻿using System;
+using RoDSStar.Logic.Enums;
 
-namespace RoDSStar.Model
+namespace RoDSStar.Logic.Models
 {
     /// <summary>
     /// Megrendelések osztálya

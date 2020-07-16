@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RoDSStar.Model\RoDSStar.Model.csproj" />
+    <ProjectReference Include="..\RoDSStar.Model\RoDSStar.Logic.csproj" />
   </ItemGroup>
 
 </Project>
