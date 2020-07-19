@@ -1,5 +1,8 @@
-﻿using System;
+﻿using RoDSStar.Logic.Enums;
+using Serilog;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace RoDSStar.Logic.Models
 {
@@ -32,15 +35,45 @@ namespace RoDSStar.Logic.Models
         /// Késés esetén fizetendő büntetés naponként
         /// </summary>
         public int PenaltForDelayPerDay { get; set; }
+        /// <summary>
+        /// Prioritás
+        /// </summary>
+        public double Priority { get; set; }
 
         /// <summary>
-        /// Megrendelés priorítása
+        /// Beállítja a Prioritást
         /// </summary>
-        /// <param name="totalProfit">A megrendelésekből álló összprofit</param>
-        /// <returns>Megrendelés prioritása</returns>
-        public double GetPriority(double totalProfit)
+        /// <param name="totalProfit"></param>
+        public void SetPriority(double totalProfit)
         {
-            return 0;
+            double result = 0;
+
+            switch(Products.First().Type)
+            {
+                case ProductType.ChildrenBicycle:
+                    result = 50;
+                    break;
+                case ProductType.AdultBicycle:
+                    result = 76;
+                    break;
+                case ProductType.TeenagerBicycle:
+                    result = 63;
+                    break;
+            }
+
+            result *= Count;
+            result /= 960;
+            DateTime date = DateTime.Parse("2020.07.20. 6:00");
+            date = date.AddDays(result);
+            result = (date - Deadline).TotalDays;
+            result = result <= 1 ? 1 : result;
+            result *= PenaltForDelayPerDay;
+            result /= totalProfit;
+            result *= 100;
+
+            Log.Information($"{Id} {result}");
+
+            Priority = result;
         }
     }
 }

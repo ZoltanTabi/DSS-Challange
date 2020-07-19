@@ -31,7 +31,7 @@ namespace RoDSStar.Logic.Helpers
         /// </summary>
         /// <param name="path">Fájl elérési útvonala</param>
         /// <returns>Order osztályt tartalmazó lista</returns>
-        public async Task<IEnumerable<Order>> ReadAsync()
+        public async Task<IList<Order>> ReadAsync()
         {
             IList<Order> records = new List<Order>();
             var lines = (await File.ReadAllLinesAsync(path)).Skip(1);
@@ -56,7 +56,7 @@ namespace RoDSStar.Logic.Helpers
 
         public async Task WriteAsync(IEnumerable<Order> orders, IList<WorkStation> workStations)
         {
-            using (var orderWriter = new StreamWriter( new FileStream(@$"Megrendelesek{postFix}.csv", FileMode.Create), encoding: Encoding.UTF8))
+            using (var orderWriter = new StreamWriter( new FileStream(@$"{filesPath}Megrendelesek{postFix}.csv", FileMode.Create), encoding: Encoding.UTF8))
             {
                 await orderWriter.WriteAsync("Megrendelésszám;");
                 await orderWriter.WriteAsync("Profit összesen;");
@@ -68,7 +68,7 @@ namespace RoDSStar.Logic.Helpers
                 foreach (var order in orders)
                 {
                     var startTime = order.Products.First().StartTime.Value;
-                    order.Products.OrderByDescending(x => x.DoneTime);
+                    order.Products = order.Products.OrderByDescending(x => x.DoneTime).ToList();
                     var doneTime = order.Products.First().DoneTime.Value;
                     var delayDay = Convert.ToInt32(Math.Floor((doneTime - order.Deadline).TotalDays));
                     if (doneTime.Hour > order.Deadline.Hour || doneTime.Hour == order.Deadline.Hour && doneTime.Minute > order.Deadline.Minute)
@@ -85,6 +85,37 @@ namespace RoDSStar.Logic.Helpers
                     await orderWriter.WriteAsync($"{doneTime:MM.d. H:mm};");
                     await orderWriter.WriteAsync($"{order.Deadline:MM.d. H:mm};");
                     await orderWriter.WriteLineAsync();
+                }
+            }
+
+            using (var workStationWriter = new StreamWriter(new FileStream(@$"{filesPath}Gepek{postFix}.csv", FileMode.Create), encoding: Encoding.UTF8))
+            {
+                await workStationWriter.WriteAsync("Dátum;");
+                await workStationWriter.WriteAsync("Gép;");
+                await workStationWriter.WriteAsync("Kezdő időpont;");
+                await workStationWriter.WriteAsync("Záró időpont;");
+                await workStationWriter.WriteAsync("Megrendelésszám;");
+                await workStationWriter.WriteLineAsync();
+                foreach (var order in orders)
+                {
+                    var startTime = order.Products.First().StartTime.Value;
+                    order.Products = order.Products.OrderByDescending(x => x.DoneTime).ToList();
+                    var doneTime = order.Products.First().DoneTime.Value;
+                    var delayDay = Convert.ToInt32(Math.Floor((doneTime - order.Deadline).TotalDays));
+                    if (doneTime.Hour > order.Deadline.Hour || doneTime.Hour == order.Deadline.Hour && doneTime.Minute > order.Deadline.Minute)
+                    {
+                        ++delayDay;
+                    }
+
+                    var penalty = delayDay > 0 ? order.PenaltForDelayPerDay * delayDay : 0;
+
+                    await workStationWriter.WriteAsync($"{order.Id};");
+                    await workStationWriter.WriteAsync($"{order.Count * order.ProfitPerPrice};");
+                    await workStationWriter.WriteAsync($"{penalty};");
+                    await workStationWriter.WriteAsync($"{startTime:MM.d. H:mm};");
+                    await workStationWriter.WriteAsync($"{doneTime:MM.d. H:mm};");
+                    await workStationWriter.WriteAsync($"{order.Deadline:MM.d. H:mm};");
+                    await workStationWriter.WriteLineAsync();
                 }
             }
         }

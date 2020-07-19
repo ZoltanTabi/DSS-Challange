@@ -1,8 +1,6 @@
 ﻿using RoDSStar.Logic.Enums;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace RoDSStar.Logic.Models
 {
@@ -47,41 +45,19 @@ namespace RoDSStar.Logic.Models
             }
         }
 
-        public void CutterPutProductMachines(List<Order> orders)
+        /// <summary>
+        /// Munka szalagra rakása a terméknek
+        /// </summary>
+        /// <param name="order">Megrendelés</param>
+        public void PutProductsOnMachines(Order order)
         {
-            switch (orders.Count)
+            var workTime = OrderWorkTime(order.Products.First());
+            var queue = new Queue<Product>(order.Products);
+            var i = 0;
+            while (queue.Any())
             {
-                case 1:
-                    var order = orders.First();
-                    var workTime = OrderWorkTime(order.Products.First());
-                    var queue = new Queue<Product>(order.Products);
-                    var i = 0;
-                    while (queue.Any())
-                    {
-                        Machines[i % Capacity].Process(queue.Dequeue(), workTime, order.Id);
-                        ++i;
-                    }
-                    break;
-                    //case 2:
-                    //    break;
-            }
-        }
-
-        public void PutProductsOnMachines(List<Order> orders)
-        {
-            switch (orders.Count)
-            {
-                case 1:
-                    var order = orders.First();
-                    var workTime = OrderWorkTime(order.Products.First());
-                    var queue = new Queue<Product>(order.Products);
-                    var i = 0;
-                    while (queue.Any())
-                    {
-                        Machines[i % Capacity].Process(queue.Dequeue(), workTime, order.Id);
-                        ++i;
-                    }
-                    break;
+                Machines[i % Capacity].Process(queue.Dequeue(), workTime, order.Id);
+                ++i;
             }
         }
 

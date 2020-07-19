@@ -37,7 +37,7 @@ namespace RoDSStar.Logic.Models
         /// <summary>
         /// Megrendelések
         /// </summary>
-        public IEnumerable<Order> Orders { get; set; }
+        public IList<Order> Orders { get; set; }
 
         /// <summary>
         /// Constructor
@@ -73,16 +73,18 @@ namespace RoDSStar.Logic.Models
         /// <returns>A fájlok útvonalával</returns>
         public async Task<string> Simulation()
         {
-            Orders.OrderByDescending(x => x.GetPriority(Orders.Sum(x => x.Count * x.ProfitPerPrice)));
-            //List<List<Order>> groupOrders = new List<List<Order>>();
+            foreach(var order in Orders)
+            {
+                order.SetPriority(Orders.Sum(x => x.Count * x.ProfitPerPrice));
+            }
 
-            //var r = Orders.GroupBy(x => x.GetPriority(0) > 1);
-
+            Orders = Orders.OrderByDescending(x => x.Priority).ToList();
+            
             foreach(var workStation in WorkStations)
             {
                 foreach(var order in Orders)
                 {
-                    workStation.PutProductsOnMachines(new List<Order> { order });
+                    workStation.PutProductsOnMachines(order);
                 }
             }
 
