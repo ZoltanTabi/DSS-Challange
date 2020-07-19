@@ -71,7 +71,7 @@ namespace RoDSStar.Logic.Models
         /// The main thread
         /// </summary>
         /// <returns>The path of the files</returns>
-        public async Task<string> Simulation()
+        public async Task Simulation()
         {
             foreach(var order in Orders)
             {
@@ -90,8 +90,6 @@ namespace RoDSStar.Logic.Models
             }
 
             await fileHandling.WriteAsync(Orders, WorkStations);
-
-            return "";
         }
     }
 }

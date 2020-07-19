@@ -1,4 +1,5 @@
 ﻿using RoDSStar.Logic.Enums;
+using Serilog;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,6 +14,10 @@ namespace RoDSStar.Logic.Models
         ///List of the work machines
         /// </summary>
         public IList<Machine> Machines { get; set; }
+        /// <summary>
+        /// Name of Work Station
+        /// </summary>
+        public string Name { get; set; }
         /// <summary>
         /// Quantity of the machines
         /// </summary>
@@ -51,6 +56,7 @@ namespace RoDSStar.Logic.Models
         /// <param name="order">Order</param>
         public void PutProductsOnMachines(Order order)
         {
+            Log.Information($"{order.Id} azonosítójú megrendelés megkezdése a {Name} gépeknél");
             var workTime = OrderWorkTime(order.Products.First());
             var queue = new Queue<Product>(order.Products);
             var i = 0;
@@ -58,6 +64,19 @@ namespace RoDSStar.Logic.Models
             {
                 Machines[i % Capacity].Process(queue.Dequeue(), workTime, order.Id);
                 ++i;
+            }
+            Log.Information($"{order.Id} azonosítójú megrendelés befejezése a {Name} gépeknél");
+        }
+
+        /// <summary>
+        /// Logs the end time
+        /// </summary>
+        public void EndWork()
+        {
+            foreach(var machine in Machines)
+            {
+                var lastLog = machine.Logs.Last();
+                lastLog.EndTime = machine.DoneTime.Value;
             }
         }
 
