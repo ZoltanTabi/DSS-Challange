@@ -7,41 +7,41 @@ using System.Linq;
 namespace RoDSStar.Logic.Models
 {
     /// <summary>
-    /// Megrendelések osztálya
+    /// Class of orders
     /// </summary>
     public class Order
     {
         /// <summary>
-        /// Azonosító
+        /// Id
         /// </summary>
         public string Id { get; set; }
         /// <summary>
-        /// Megrendelt termék típusa
+        /// The ordered product's type
         /// </summary>
         public IList<Product> Products { get; set; }
         /// <summary>
-        /// Megrendelés darabszáma
+        /// The ordered products quantity
         /// </summary>
         public int Count { get; set; }
         /// <summary>
-        /// Megrendelés határideje
+        /// The deadline of the order
         /// </summary>
         public DateTime Deadline { get; set; }
         /// <summary>
-        /// Termékenkénti profit
+        /// The profit of each product
         /// </summary>
         public int ProfitPerPrice { get; set; }
         /// <summary>
-        /// Késés esetén fizetendő büntetés naponként
+        /// The amount of money lost per day
         /// </summary>
         public int PenaltForDelayPerDay { get; set; }
         /// <summary>
-        /// Prioritás
+        /// Priority
         /// </summary>
         public double Priority { get; set; }
 
         /// <summary>
-        /// Beállítja a Prioritást
+        /// Sets the priority
         /// </summary>
         /// <param name="totalProfit"></param>
         public void SetPriority(double totalProfit)

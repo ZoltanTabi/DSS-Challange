@@ -5,36 +5,36 @@ using System.Linq;
 namespace RoDSStar.Logic.Models
 {
     /// <summary>
-    /// Munkaállomásokat leíró osztályszerkezet
+    /// Class of the worstation
     /// </summary>
     public class WorkStation
     {
         /// <summary>
-        /// Munka gépek listája
+        ///List of the work machines
         /// </summary>
         public IList<Machine> Machines { get; set; }
         /// <summary>
-        /// Munka gépek száma
+        /// Quantity of the machines
         /// </summary>
         public int Capacity { get; set; }
         /// <summary>
-        /// Gyerek bicikli munka ideje
+        /// Processing time of the child bycicle
         /// </summary>
         public int ChildrenBycicleTime { get; set; }
         /// <summary>
-        /// Felnőtt bicikli munka ideje
+        /// Processing time of the adult bycicle
         /// </summary>
         public int AdultBycicleTime { get; set; }
         /// <summary>
-        /// Serdülő bicikli munka ideje
+        /// Processing time of the teenager bycicle
         /// </summary>
         public int TeenagerBycicleTime { get; set; }
 
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="name">Munka gépek nevei</param>
-        /// <param name="capacity">Munka gépek száma</param>
+        /// <param name="name">Names of the machines</param>
+        /// <param name="capacity">Quantity of the machines</param>
         public WorkStation(string name, int capacity)
         {
             Capacity = capacity;
@@ -46,9 +46,9 @@ namespace RoDSStar.Logic.Models
         }
 
         /// <summary>
-        /// Munka szalagra rakása a terméknek
+        /// Putting the products on the machines.
         /// </summary>
-        /// <param name="order">Megrendelés</param>
+        /// <param name="order">Order</param>
         public void PutProductsOnMachines(Order order)
         {
             var workTime = OrderWorkTime(order.Products.First());

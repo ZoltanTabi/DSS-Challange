@@ -11,7 +11,7 @@ using System.Text;
 namespace RoDSStar.Logic.Helpers
 {
     /// <summary>
-    /// Fájl kezelését végző osztály
+    /// The managing class of the file reading and writing.
     /// </summary>
     public class FileHandling
     {
@@ -27,10 +27,10 @@ namespace RoDSStar.Logic.Helpers
         }
 
         /// <summary>
-        /// Fájl beolvasását és Order osztállyá alakítását végző függvény
+        /// This function reads the file, and make an Order object from its contents.
         /// </summary>
-        /// <param name="path">Fájl elérési útvonala</param>
-        /// <returns>Order osztályt tartalmazó lista</returns>
+        /// <param name="path">File path</param>
+        /// <returns>A list of Order objects</returns>
         public async Task<IList<Order>> ReadAsync()
         {
             IList<Order> records = new List<Order>();
@@ -121,10 +121,10 @@ namespace RoDSStar.Logic.Helpers
         }
 
         /// <summary>
-        /// Határidő string-et átalakítja DateTime-á
+        /// Makes a DateTime from the date string
         /// </summary>
-        /// <param name="date">csv fájlban szereplő határidő formátum</param>
-        /// <returns>DateTime formátumban a határidő</returns>
+        /// <param name="date">The date format from the csv file.</param>
+        /// <returns>The deadline in DateTime format.</returns>
         private DateTime DeadlineConverter(string date)
         {
             var splitDate = date.Split(".:".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
@@ -146,11 +146,11 @@ namespace RoDSStar.Logic.Helpers
         }
 
         /// <summary>
-        /// Termékeket átalakító függvény
+        /// Converts the products from string
         /// </summary>
-        /// <param name="productType">Termék típusa</param>
-        /// <param name="count">Termék darabszáma</param>
-        /// <returns>Termék lista</returns>
+        /// <param name="productType">The type of the product</param>
+        /// <param name="count">The count of the products</param>
+        /// <returns>List of products</returns>
         private IList<Product> ProductsConverter(string productType, int count)
         {
             IList<Product> result = new List<Product>();

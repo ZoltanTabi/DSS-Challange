@@ -1,20 +1,20 @@
 ﻿namespace RoDSStar.Logic.Enums
 {
     /// <summary>
-    /// Termék típusa
+    /// The possible types of product
     /// </summary>
     public enum ProductType
     {
         /// <summary>
-        /// Gyerek bicikli
+        /// Children bicycle
         /// </summary>
         ChildrenBicycle,
         /// <summary>
-        /// Felnőtt bicikli
+        /// Adult bicycle
         /// </summary>
         AdultBicycle,
         /// <summary>
-        /// Serdülő bicikli
+        /// Teenager bicycle
         /// </summary>
         TeenagerBicycle
     }

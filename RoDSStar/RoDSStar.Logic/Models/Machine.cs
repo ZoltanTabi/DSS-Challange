@@ -6,7 +6,7 @@ using System.Linq;
 namespace RoDSStar.Logic.Models
 {
     /// <summary>
-    /// Munka gépeket leíró osztály
+    /// Class of the Work Machines
     /// </summary>
     public class Machine
     {
@@ -16,15 +16,15 @@ namespace RoDSStar.Logic.Models
         /// </summary>
         public string Name { get; set; }
         /// <summary>
-        /// A munkagép ekkortól lesz elérhető
+        /// The machine will be available from this time
         /// </summary>
         public DateTime? DoneTime { get; set; }
         /// <summary>
-        /// A munkagép logja
+        /// The log of the machine
         /// </summary>
         public IList<MachineLog> Logs { get; set; } = new List<MachineLog>();
         /// <summary>
-        /// Aktuálisan csinált megrendelés
+        /// The currently processed order
         /// </summary>
         public string CurrentOrderId { get; set; }
 
@@ -36,7 +36,12 @@ namespace RoDSStar.Logic.Models
         {
             Name = name;
         }
-
+        /// <summary>
+        /// The functions modify the machines DoneTime according to the processed product.
+        /// </summary>
+        /// <param name="product">The currently processed product</param>
+        /// <param name="workTime">The amount of time it takes to the machine to modify the product</param>
+        /// <param name="orderId">The id of the order where the product belongs</param>
         public void Process(Product product, int workTime, string orderId)
         {
             var currentTime = (DoneTime == null && product.DoneTime == null) ? startDate

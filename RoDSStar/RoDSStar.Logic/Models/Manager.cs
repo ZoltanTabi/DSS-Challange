@@ -7,18 +7,18 @@ using RoDSStar.Logic.Helpers;
 namespace RoDSStar.Logic.Models
 {
     /// <summary>
-    /// Üzleti logikát megvalósító osztály
+    /// The model's managing class
     /// </summary>
     public class Manager
     {
         /// <summary>
-        /// Fájlkezelő
+        /// File handling
         /// </summary>
         private readonly FileHandling fileHandling;
         /// <summary>
-        /// Munkaállomások paraméterei
-        /// Gépek neve
-        /// Gépek száma, Gyerek bicikli - , Felnőtt bicikli - , Serdülő bicikli munkaideje
+        /// Parameters of the work stations
+        /// Machines' names
+        /// Machines' quantity, the processing times of the child, adult and teenager bicycles
         /// </summary>
         private readonly Dictionary<string, Tuple<int, int, int, int>> workStationsParameters = new Dictionary<string, Tuple<int, int, int, int>>
         {
@@ -31,18 +31,18 @@ namespace RoDSStar.Logic.Models
         };
 
         /// <summary>
-        /// Munkaállomások
+        /// list of workstations
         /// </summary>
         public IList<WorkStation> WorkStations { get; set; }
         /// <summary>
-        /// Megrendelések
+        /// List of orders
         /// </summary>
         public IList<Order> Orders { get; set; }
 
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="fileHandling">Fájl kezelő osztály</param>
+        /// <param name="fileHandling">File handling class</param>
         public Manager(FileHandling fileHandling)
         {
             this.fileHandling = fileHandling;
@@ -59,7 +59,7 @@ namespace RoDSStar.Logic.Models
         }
 
         /// <summary>
-        /// Fájl beolvasása
+        /// Reading of the file
         /// </summary>
         /// <returns></returns>
         public async Task ReadAsync()
@@ -68,9 +68,9 @@ namespace RoDSStar.Logic.Models
         }
 
         /// <summary>
-        /// Fő folyamat
+        /// The main thread
         /// </summary>
-        /// <returns>A fájlok útvonalával</returns>
+        /// <returns>The path of the files</returns>
         public async Task<string> Simulation()
         {
             foreach(var order in Orders)
