@@ -1,5 +1,5 @@
 ﻿using System;
-using RoDSStar.Logic.Enums;
+using System.Collections.Generic;
 
 namespace RoDSStar.Logic.Models
 {
@@ -15,7 +15,7 @@ namespace RoDSStar.Logic.Models
         /// <summary>
         /// Megrendelt termék típusa
         /// </summary>
-        public ProductType Product { get; set; }
+        public IList<Product> Products { get; set; }
         /// <summary>
         /// Megrendelés darabszáma
         /// </summary>
@@ -32,5 +32,15 @@ namespace RoDSStar.Logic.Models
         /// Késés esetén fizetendő büntetés naponként
         /// </summary>
         public int PenaltForDelayPerDay { get; set; }
+
+        /// <summary>
+        /// Megrendelés priorítása
+        /// </summary>
+        /// <param name="totalProfit">A megrendelésekből álló összprofit</param>
+        /// <returns>Megrendelés prioritása</returns>
+        public double GetPriority(double totalProfit)
+        {
+            return 0;
+        }
     }
 }

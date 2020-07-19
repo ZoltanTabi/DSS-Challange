@@ -4,5 +4,5 @@
 
 - Nyissunk meg egy parancssori alkalmazást.
 - Lépjünk be a RoDSStar\RoDSStar.ConsoleApp mappába
-- Használjuk a következő parancsot: dotnet build
+- Használjuk a következő parancsot: dotnet build --configuration Release
 - Futattáshoz: dotnet run
