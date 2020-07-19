@@ -58,13 +58,7 @@ namespace RoDSStar.Logic.Helpers
         {
             using (var orderWriter = new StreamWriter( new FileStream(@$"{filesPath}Megrendelesek{postFix}.csv", FileMode.Create), encoding: Encoding.UTF8))
             {
-                await orderWriter.WriteAsync("Megrendelésszám;");
-                await orderWriter.WriteAsync("Profit összesen;");
-                await orderWriter.WriteAsync("Levont kötbér;");
-                await orderWriter.WriteAsync("Munka megkezdése;");
-                await orderWriter.WriteAsync("Készre jelentés ideje;");
-                await orderWriter.WriteAsync("Megrendelés eredeti határideje;");
-                await orderWriter.WriteLineAsync();
+                await orderWriter.WriteLineAsync("Megrendelésszám;Profit összesen;Levont kötbér;Munka megkezdése;Készre jelentés ideje;Megrendelés eredeti határideje;");
                 foreach (var order in orders)
                 {
                     var startTime = order.Products.First().StartTime.Value;
@@ -78,44 +72,22 @@ namespace RoDSStar.Logic.Helpers
 
                     var penalty = delayDay > 0 ? order.PenaltForDelayPerDay * delayDay : 0;
 
-                    await orderWriter.WriteAsync($"{order.Id};");
-                    await orderWriter.WriteAsync($"{order.Count * order.ProfitPerPrice};");
-                    await orderWriter.WriteAsync($"{penalty};");
-                    await orderWriter.WriteAsync($"{startTime:MM.d. H:mm};");
-                    await orderWriter.WriteAsync($"{doneTime:MM.d. H:mm};");
-                    await orderWriter.WriteAsync($"{order.Deadline:MM.d. H:mm};");
-                    await orderWriter.WriteLineAsync();
+                    await orderWriter.WriteLineAsync($"{order.Id};{order.Count * order.ProfitPerPrice};{penalty};{startTime:MM.d. H:mm};{doneTime:MM.d. H:mm};{order.Deadline:MM.d. H:mm};");
                 }
             }
 
             using (var workStationWriter = new StreamWriter(new FileStream(@$"{filesPath}Gepek{postFix}.csv", FileMode.Create), encoding: Encoding.UTF8))
             {
-                await workStationWriter.WriteAsync("Dátum;");
-                await workStationWriter.WriteAsync("Gép;");
-                await workStationWriter.WriteAsync("Kezdő időpont;");
-                await workStationWriter.WriteAsync("Záró időpont;");
-                await workStationWriter.WriteAsync("Megrendelésszám;");
-                await workStationWriter.WriteLineAsync();
-                foreach (var order in orders)
+                await workStationWriter.WriteLineAsync("Gép;Kezdő időpont;Záró időpont;Megrendelésszám;");
+                foreach (var workStation in workStations)
                 {
-                    var startTime = order.Products.First().StartTime.Value;
-                    order.Products = order.Products.OrderByDescending(x => x.DoneTime).ToList();
-                    var doneTime = order.Products.First().DoneTime.Value;
-                    var delayDay = Convert.ToInt32(Math.Floor((doneTime - order.Deadline).TotalDays));
-                    if (doneTime.Hour > order.Deadline.Hour || doneTime.Hour == order.Deadline.Hour && doneTime.Minute > order.Deadline.Minute)
+                    foreach (var machine in workStation.Machines)
                     {
-                        ++delayDay;
+                        foreach (var log in machine.Logs)
+                        {
+                            await workStationWriter.WriteLineAsync($"{machine.Name};{log.StartTime:yyy.MM.dd. H:mm};{log.EndTime:yyyy.MM.dd. H:mm};{log.OrderId};");
+                        }
                     }
-
-                    var penalty = delayDay > 0 ? order.PenaltForDelayPerDay * delayDay : 0;
-
-                    await workStationWriter.WriteAsync($"{order.Id};");
-                    await workStationWriter.WriteAsync($"{order.Count * order.ProfitPerPrice};");
-                    await workStationWriter.WriteAsync($"{penalty};");
-                    await workStationWriter.WriteAsync($"{startTime:MM.d. H:mm};");
-                    await workStationWriter.WriteAsync($"{doneTime:MM.d. H:mm};");
-                    await workStationWriter.WriteAsync($"{order.Deadline:MM.d. H:mm};");
-                    await workStationWriter.WriteLineAsync();
                 }
             }
         }
