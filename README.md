@@ -9,4 +9,4 @@
 
 ## Docker image
 
-- Az alkalmazás konténerizált válzotaza elérhető a következő Docker Repository-ban: https://hub.docker.com/r/nagyrichard/dss-challange-rodsstar
+- Az alkalmazás konténerizált változata elérhető a következő Docker Repository-ban: https://hub.docker.com/r/nagyrichard/dss-challange-rodsstar
