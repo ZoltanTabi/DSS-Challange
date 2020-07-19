@@ -86,6 +86,7 @@ namespace RoDSStar.Logic.Models
                 {
                     workStation.PutProductsOnMachines(order);
                 }
+                workStation.EndWork();
             }
 
             await fileHandling.WriteAsync(Orders, WorkStations);

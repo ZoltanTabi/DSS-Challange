@@ -38,35 +38,26 @@ namespace RoDSStar.ConsoleApp
                 path = Console.ReadLine();
             }
 
+            try
+            {
+                Log.Information($"A beolvasás elkezdődik! Fájl: {path}");
+                var manager = new Manager(new FileHandling(path, filesPath, postFix));
+                await manager.ReadAsync();
 
-
-            Log.Information($"A beolvasás elkezdődik! Fájl: {path}");
-            var manager = new Manager(new FileHandling(path, filesPath, postFix));
-            await manager.ReadAsync();
-
-            await manager.Simulation();
-            Log.Information("Vége");
-
-
-            //try
-            //{
-            //    Log.Information($"A beolvasás elkezdődik! Fájl: {path}");
-            //    var manager = new Manager(new FileHandling(path, filesPath, postFix));
-            //    await manager.ReadAsync();
-
-            //    manager.Simulation();
-            //    Log.Information("Vége");
-            //}
-            //catch (ApplicationException ex)
-            //{
-            //    Console.WriteLine(ex.Message);
-            //    Log.Warning(ex.ToString());
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine("Váratlan hiba!");
-            //    Log.Error(ex.ToString());
-            //}
+                await manager.Simulation();
+                Log.Information("Munka vége!");
+                Console.WriteLine("A munka befejeződött!");
+            }
+            catch (ApplicationException ex)
+            {
+                Console.WriteLine(ex.Message);
+                Log.Warning(ex.ToString());
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Váratlan hiba!");
+                Log.Error(ex.ToString());
+            }
         }
     }
 }
